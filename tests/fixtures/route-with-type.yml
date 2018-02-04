@@ -1,0 +1,7 @@
+---
+routename:
+    controller: HomeController::indexAction
+    locales:
+        nl: /nl
+        en: /en
+    type: i18n_routes

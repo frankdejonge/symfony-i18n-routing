@@ -1,0 +1,6 @@
+---
+importing_with_missing_prefix:
+    resource: ./home.yml
+    type: i18n_routes
+    prefix:
+        nl: /prefix

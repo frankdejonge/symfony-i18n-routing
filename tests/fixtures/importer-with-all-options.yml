@@ -1,0 +1,8 @@
+---
+i_need:
+    resource: ./home.yml
+    type: i18n_routes
+    host: localhost
+    methods: [POST, GET]
+    schemes: [https,http]
+    condition: "context.getMethod() in ['GET', 'HEAD']"

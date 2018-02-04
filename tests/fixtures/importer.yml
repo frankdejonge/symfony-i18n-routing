@@ -1,0 +1,4 @@
+---
+i_need:
+    resource: ./home.yml
+    type: i18n_routes

@@ -1,0 +1,8 @@
+---
+home:
+    controller: haha::haha
+    defaults:
+        _controller: lol::lol
+    locales:
+        nl: /nl
+        en: /en

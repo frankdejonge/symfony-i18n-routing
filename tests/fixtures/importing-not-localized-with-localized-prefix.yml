@@ -1,0 +1,7 @@
+---
+import_these:
+    resource: ./not-localized.yml
+    type: i18n_routes
+    prefix:
+        nl: /nl
+        en: /en
