@@ -10,8 +10,8 @@ $container->register('frankdejonge_i18n_routing.yaml_loader', YamlFileLoader::cl
 
 $routerDefinitionName = 'router';
 
-if ($container->hasAlias('router')) {
-    $routerDefinitionName = $container->getAlias('router')->__toString();
+if ($container->hasAlias($routerDefinitionName)) {
+    $routerDefinitionName = $container->getAlias($routerDefinitionName)->__toString();
 }
 
 $container->register('frankdejonge_i18n_routing.router', I18nRouter::class)

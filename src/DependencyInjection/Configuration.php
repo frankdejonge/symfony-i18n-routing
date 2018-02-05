@@ -13,7 +13,7 @@ class Configuration implements ConfigurationInterface
         $root = $treeBuilder->root('frankdejonge_i18n_routing');
         $root->children()
             ->scalarNode('default_locale')
-                ->defaultValue('%framework.default_locale%')
+                ->defaultValue('en')
             ->end()
         ->end();
 

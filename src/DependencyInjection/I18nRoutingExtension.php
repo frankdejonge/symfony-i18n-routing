@@ -27,7 +27,6 @@ class I18nRoutingExtension extends Extension
         );
 
         $loader->load('services.php');
-
         $config = $this->processConfiguration(new Configuration(), $configs);
         $container->setParameter('frankdejonge_i18n_routing.default_locale', $config['default_locale']);
     }
