@@ -2,7 +2,6 @@
 
 use FrankDeJonge\SymfonyI18nRouting\I18nRoutingBundle;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\Routing\Router;
 

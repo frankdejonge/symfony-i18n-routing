@@ -4,16 +4,14 @@ namespace FrankDeJonge\SymfonyI18nRouting\Routing\Loader;
 
 use Generator;
 use InvalidArgumentException;
-use function is_a;
-use function is_array;
 use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser as YamlParser;
+use function is_array;
 use function trim;
-use function var_dump;
 
 /**
  * YamlFileLoader loads Yaml routing files.
