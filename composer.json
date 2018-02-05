@@ -2,6 +2,7 @@
     "name": "frankdejonge/symfony-i18n-routing",
     "description": "Internationalised routing for Symfony 4",
     "type": "library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "FrankDeJonge\\SymfonyI18nRouting\\": "src"
