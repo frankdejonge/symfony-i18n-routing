@@ -14,7 +14,7 @@
 This bundle provides a method of internationalization of route definitions. This means 
 you can define a path per locale and still have them route to the same controller action.
 
-## Usage
+## Installation
 
 ```bash
 composer req frankdejonge/symfony-i18n-routing
@@ -29,6 +29,13 @@ return [
     FrankDeJonge\SymfonyI18nRouting\I18nRoutingBundle::class => ['all' => true],
     // ...
 ];
+```
+
+## Configuration
+
+```yaml
+frankdejonge_i18n_routing:
+    default_locale: nl # the default is "en"
 ```
 
 ## Yaml usage
