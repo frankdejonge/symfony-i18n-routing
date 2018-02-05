@@ -8,7 +8,7 @@
         }
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1.3",
         "symfony/routing": "^4.0",
         "symfony/config": "^4.0"
     },
