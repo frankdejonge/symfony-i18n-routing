@@ -31,11 +31,14 @@ return [
 ];
 ```
 
+Note that if you want to use the annotations you'll need to ensure this bundle is loaded BEFORE the FrameworkBundle.
+
 ## Configuration
 
 ```yaml
 frankdejonge_i18n_routing:
-    default_locale: nl # the default is "en"
+    default_locale: en
+    annotations: false # set to true to enable annotation loading
 ```
 
 ## Yaml usage
@@ -76,3 +79,51 @@ contact.nl:
 
 As you can see this saves you a bit of typing and prevents you from
 having to keep 2 definitions in sync (less error prone).
+
+## Annotation usage
+
+The annotation loader supports both normal route annotations and
+localized ones. The `@I18nROute` and `@Route` annotations can be
+be mixed at will.
+
+```php
+<?php
+
+use FrankDeJonge\SymfonyI18nRouting\Routing\Annotation\I18nRoute;
+
+class SomeController
+{
+    /**
+     * @I18nRoute({"nl": "/een/actie", "en": "/an/action"}, name="some_name") 
+     */
+    public function someAction()
+    {
+        
+    }
+}
+
+/** 
+ * @Route("/prefix") 
+ */
+class PrefixedController
+{
+    /**
+     * @I18nRoute({"nl": "/een/actie", "en": "/an/action"}, name="some_name") 
+     */
+    public function someAction()
+    {
+        
+    }
+}
+```
+
+## Generating routes
+
+Generating routes can be done using the specified route name.
+
+```php
+<?php
+/** @var UrlGeneratorInterface $urlGenerator */
+$urlWithCurrentLocale = $urlGenerator->generate('home');
+$urlWithSpecifiedLocale = $urlGenerator->generate('home', ['_locale' => 'nl']);
+```
