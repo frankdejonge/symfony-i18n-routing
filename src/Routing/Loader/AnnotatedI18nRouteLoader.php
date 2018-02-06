@@ -2,17 +2,19 @@
 
 namespace FrankDeJonge\SymfonyI18nRouting\Routing\Loader;
 
-use function array_diff;
-use function array_keys;
 use Doctrine\Common\Annotations\Reader;
 use FrankDeJonge\SymfonyI18nRouting\Routing\Annotation\I18nRoute;
-use function join;
-use LogicException;
 use ReflectionClass;
 use ReflectionMethod;
+use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\Routing\Annotation\Route as SymfonyRoute;
 use Symfony\Component\Routing\Loader\AnnotationClassLoader;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
+use function array_diff;
+use function array_keys;
+use function join;
+use function var_dump;
 
 class AnnotatedI18nRouteLoader extends AnnotationClassLoader
 {
@@ -22,6 +24,57 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
     {
         parent::__construct($reader);
         $this->setRouteAnnotationClass(I18nRoute::class);
+    }
+
+
+    /**
+     * Loads from annotations from a class.
+     *
+     * @param string      $class A class name
+     * @param string|null $type  The resource type
+     *
+     * @return RouteCollection A RouteCollection instance
+     *
+     * @throws \InvalidArgumentException When route can't be parsed
+     */
+    public function load($class, $type = null)
+    {
+        if ( ! class_exists($class)) {
+            throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
+        }
+
+        $class = new \ReflectionClass($class);
+        if ($class->isAbstract()) {
+            throw new \InvalidArgumentException(sprintf('Annotations from class "%s" cannot be read as it is abstract.', $class->getName()));
+        }
+
+        $globals = $this->getGlobals($class);
+
+        $collection = new RouteCollection();
+        $collection->addResource(new FileResource($class->getFileName()));
+
+        foreach ($class->getMethods() as $method) {
+            $this->defaultRouteIndex = 0;
+            foreach ($this->reader->getMethodAnnotations($method) as $annot) {
+                if ($annot instanceof SymfonyRoute || $annot instanceof I18nRoute) {
+                    $this->addRoute($collection, $annot, $globals, $class, $method);
+                }
+            }
+        }
+
+        if (0 === $collection->count() && $class->hasMethod('__invoke')) {
+            $annot = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass)
+                ?: $this->reader->getClassAnnotation($class, SymfonyRoute::class);
+
+            if ($annot != null) {
+                $globals['path'] = '';
+                $globals['name'] = '';
+                $globals['locales'] = [];
+                $this->addRoute($collection, $annot, $globals, $class, $class->getMethod('__invoke'));
+            }
+        }
+
+        return $collection;
     }
 
     /**
@@ -54,7 +107,7 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
         $host = $annotation->getHost() ?: $globals['host'];
         $condition = $annotation->getCondition() ?: $globals['condition'];
         $path = $annotation->getPath();
-        $locales = $annotation->getLocales();
+        $locales = $annotation instanceof I18nRoute ? $annotation->getLocales() : [];
 
         $hasLocalizedPrefix = empty($globals['locales']) === false;
         $hasPrefix = $hasLocalizedPrefix || empty($globals['path']) === false;
@@ -163,10 +216,10 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
 
         $annotation = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass);
 
-        if ( ! $annotation instanceof I18nRoute) {
+        if ( ! $annotation instanceof I18nRoute && ! $annotation instanceof SymfonyRoute) {
             return $globals;
         }
-        if (null !== $annotation->getLocales()) {
+        if ($annotation instanceof I18nRoute) {
             $globals['locales'] = $annotation->getLocales();
         }
         if (null !== $annotation->getPath()) {

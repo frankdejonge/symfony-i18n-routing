@@ -2,8 +2,11 @@
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\AbstractClassController;
 use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\ActionPathController;
 use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\DefaultValueController;
+use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\InvokableController;
+use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\InvokableLocalizedController;
 use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\LocalizedActionPathController;
 use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\LocalizedMethodActionControllers;
 use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\LocalizedPrefixLocalizedActionController;
@@ -45,6 +48,27 @@ class AnnotatedI18nRouteLoaderTest extends TestCase
         $routes = $this->loader->load(ActionPathController::class);
         $this->assertCount(1, $routes);
         $this->assertEquals('/path', $routes->get('action')->getPath());
+    }
+
+    /**
+     * @test
+     */
+    public function invokable_controller_loading()
+    {
+        $routes = $this->loader->load(InvokableController::class);
+        $this->assertCount(1, $routes);
+        $this->assertEquals('/here', $routes->get('lol')->getPath());
+    }
+
+    /**
+     * @test
+     */
+    public function invokable_localized_controller_loading()
+    {
+        $routes = $this->loader->load(InvokableLocalizedController::class);
+        $this->assertCount(2, $routes);
+        $this->assertEquals('/here', $routes->get('action.en')->getPath());
+        $this->assertEquals('/hier', $routes->get('action.nl')->getPath());
     }
 
     /**
@@ -160,6 +184,24 @@ class AnnotatedI18nRouteLoaderTest extends TestCase
     {
         $this->expectException(MissingRoutePath::class);
         $this->loader->load(NothingButNameController::class);
+    }
+
+    /**
+     * @test
+     */
+    public function non_existing_class_loading()
+    {
+        $this->expectException(LogicException::class);
+        $this->loader->load('ClassThatDoesNotExist');
+    }
+
+    /**
+     * @test
+     */
+    public function loading_an_abstract_class()
+    {
+        $this->expectException(LogicException::class);
+        $this->loader->load(AbstractClassController::class);
     }
 
     /**
