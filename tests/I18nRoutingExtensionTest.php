@@ -1,6 +1,7 @@
 <?php
 
 use FrankDeJonge\SymfonyI18nRouting\I18nRoutingBundle;
+use FrankDeJonge\SymfonyI18nRouting\Routing\I18nRouter;
 use FrankDeJonge\SymfonyI18nRouting\Routing\Loader\AnnotatedI18nRouteLoader;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
@@ -20,22 +21,7 @@ class I18nRoutingExtensionTest extends AbstractExtensionTestCase
      */
     public function it_registers_a_router()
     {
-        $this->container->register('router', Router::class);
         $this->load();
-        $this->assertContainerBuilderHasAlias('router', 'frankdejonge_i18n_routing.router');
-        $this->assertContainerBuilderHasService('frankdejonge_i18n_routing.router');
-    }
-
-    /**
-     * @test
-     */
-    public function it_handles_router_aliases()
-    {
-        $this->container->register('another_router', Router::class);
-        $this->container->setAlias('router', 'another_router');
-        $this->load();
-
-        $this->assertContainerBuilderHasAlias('router', 'frankdejonge_i18n_routing.router');
         $this->assertContainerBuilderHasService('frankdejonge_i18n_routing.router');
     }
 

@@ -2,6 +2,7 @@
 
 namespace FrankDeJonge\SymfonyI18nRouting\DependencyInjection;
 
+use FrankDeJonge\SymfonyI18nRouting\DependencyInjection\CompilerPass\ReplaceRouterCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
