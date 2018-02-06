@@ -42,8 +42,8 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
         $defaults = array_replace($globals['defaults'], $annotation->getDefaults());
 
         foreach ($method->getParameters() as $param) {
-            if ( ! isset($defaults[$param->getName()]) && $param->isDefaultValueAvailable()) {
-                $defaults[$param->getName()] = $param->getDefaultValue();
+            if ( ! isset($defaults[$param->name]) && $param->isDefaultValueAvailable()) {
+                $defaults[$param->name] = $param->getDefaultValue();
             }
         }
 
@@ -199,6 +199,6 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
 
     protected function configureRoute(Route $route, ReflectionClass $class, ReflectionMethod $method, $annot)
     {
-        $route->setDefault('_controller', $class->getName() . '::' . $method->getName());
+        $route->setDefault('_controller', $class->name . '::' . $method->getName());
     }
 }
