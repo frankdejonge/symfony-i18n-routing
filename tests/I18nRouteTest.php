@@ -10,7 +10,7 @@ class I18nRouteTest extends TestCase
      */
     public function passing_invalid_properties()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(BadMethodCallException::class);
         new I18nRoute(['invalid' => 'property']);
     }
 

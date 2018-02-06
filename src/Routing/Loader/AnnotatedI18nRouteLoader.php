@@ -4,7 +4,6 @@ namespace FrankDeJonge\SymfonyI18nRouting\Routing\Loader;
 
 use Doctrine\Common\Annotations\Reader;
 use FrankDeJonge\SymfonyI18nRouting\Routing\Annotation\I18nRoute;
-use function get_class;
 use ReflectionClass;
 use ReflectionMethod;
 use Symfony\Component\Config\Resource\FileResource;
@@ -15,19 +14,9 @@ use Symfony\Component\Routing\RouteCollection;
 use function array_diff;
 use function array_keys;
 use function join;
-use function var_dump;
 
 class AnnotatedI18nRouteLoader extends AnnotationClassLoader
 {
-    protected $routeAnnotationClass = I18nRoute::class;
-
-    public function __construct(Reader $reader)
-    {
-        parent::__construct($reader);
-        $this->setRouteAnnotationClass(I18nRoute::class);
-    }
-
-
     /**
      * Loads from annotations from a class.
      *
@@ -63,16 +52,11 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
             }
         }
 
-        if (0 === $collection->count() && $class->hasMethod('__invoke')) {
-            $annot = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass)
-                ?: $this->reader->getClassAnnotation($class, SymfonyRoute::class);
-
-            if ($annot != null) {
-                $globals['path'] = '';
-                $globals['name'] = '';
-                $globals['locales'] = [];
-                $this->addRoute($collection, $annot, $globals, $class, $class->getMethod('__invoke'));
-            }
+        if (0 === $collection->count() && $class->hasMethod('__invoke') && $annot = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass)) {
+            $globals['path'] = '';
+            $globals['name'] = '';
+            $globals['locales'] = [];
+            $this->addRoute($collection, $annot, $globals, $class, $class->getMethod('__invoke'));
         }
 
         return $collection;
@@ -215,8 +199,7 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
             'condition'    => '',
         ];
 
-        $annotation = $this->reader->getClassAnnotation($class, I18nRoute::class)
-            ?: $this->reader->getClassAnnotation($class, SymfonyRoute::class);
+        $annotation = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass);
 
         if ($annotation instanceof I18nRoute === false && $annotation instanceof SymfonyRoute === false) {
             return $globals;
