@@ -15,6 +15,9 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('default_locale')
                 ->defaultValue('en')
             ->end()
+            ->booleanNode('use_annotations')
+                ->defaultFalse()
+            ->end()
         ->end();
 
         return $treeBuilder;

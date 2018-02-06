@@ -133,7 +133,7 @@ class YamlFileLoader extends FileLoader
 
     protected function parseImport(RouteCollection $collection, array $config, $path, $file)
     {
-        $type = isset($config['type']) ? $config['type'] : null;
+        $type = isset($config['type']) ? $config['type'] : 'i18n_routes';
         $prefix = isset($config['prefix']) ? $config['prefix'] : '';
         $defaults = isset($config['defaults']) ? $config['defaults'] : [];
         $requirements = isset($config['requirements']) ? $config['requirements'] : [];
@@ -164,7 +164,7 @@ class YamlFileLoader extends FileLoader
             }
 
             $localePrefix = is_array($prefix) ? $prefix[$routeLocale] : $prefix;
-            $route->setPath('/' . trim(trim($localePrefix, '/')) . $route->getPath());
+            $route->setPath($localePrefix . $route->getPath());
         }
 
         if (null !== $host) {

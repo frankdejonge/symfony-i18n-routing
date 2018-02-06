@@ -3,6 +3,7 @@
 namespace FrankDeJonge\SymfonyI18nRouting\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -29,5 +30,13 @@ class I18nRoutingExtension extends Extension
         $loader->load('services.php');
         $config = $this->processConfiguration(new Configuration(), $configs);
         $container->setParameter('frankdejonge_i18n_routing.default_locale', $config['default_locale']);
+        $this->configureAnnotationLoader($config, $loader);
+    }
+
+    private function configureAnnotationLoader(array $config, LoaderInterface $loader)
+    {
+        if ($config['use_annotations'] ?? false) {
+            $loader->load('annotations.php');
+        }
     }
 }

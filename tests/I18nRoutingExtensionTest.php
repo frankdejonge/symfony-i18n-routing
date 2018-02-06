@@ -1,8 +1,11 @@
 <?php
 
 use FrankDeJonge\SymfonyI18nRouting\I18nRoutingBundle;
+use FrankDeJonge\SymfonyI18nRouting\Routing\Loader\AnnotatedI18nRouteLoader;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
+use Symfony\Component\Routing\Loader\AnnotationFileLoader;
 use Symfony\Component\Routing\Router;
 
 class I18nRoutingExtensionTest extends AbstractExtensionTestCase
@@ -34,6 +37,17 @@ class I18nRoutingExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasAlias('router', 'frankdejonge_i18n_routing.router');
         $this->assertContainerBuilderHasService('frankdejonge_i18n_routing.router');
+    }
+
+    /**
+     * @test
+     */
+    public function loading_annotation_services()
+    {
+        $this->load(['use_annotations' => true]);
+        $this->assertContainerBuilderHasService('frankdejonge_i18n_routing.annotation.class_loader', AnnotatedI18nRouteLoader::class);
+        $this->assertContainerBuilderHasService('frankdejonge_i18n_routing.annotation.file_loader', AnnotationFileLoader::class);
+        $this->assertContainerBuilderHasService('frankdejonge_i18n_routing.annotation.directory_loader', AnnotationDirectoryLoader::class);
     }
 
     /**

@@ -1,0 +1,6 @@
+---
+imported:
+    controller: ImportedController::someAction
+    locales:
+        nl: /voorbeeld
+        en: /example

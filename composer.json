@@ -8,6 +8,11 @@
             "FrankDeJonge\\SymfonyI18nRouting\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "FrankDeJonge\\SymfonyI18nRouting\\AnnotationFixtures\\": "tests/AnnotationFixtures"
+        }
+    },
     "require": {
         "php": "^7.1.3",
         "symfony/routing": "^4.0",
@@ -18,7 +23,8 @@
         "phpunit/phpunit": "^6.0",
         "symfony/http-kernel": "^4.0",
         "symfony/yaml": "^4.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^2.3"
+        "matthiasnoback/symfony-dependency-injection-test": "^2.3",
+        "doctrine/annotations": "^1.6"
     },
     "authors": [
         {
