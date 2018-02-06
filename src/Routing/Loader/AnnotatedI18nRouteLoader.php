@@ -2,7 +2,6 @@
 
 namespace FrankDeJonge\SymfonyI18nRouting\Routing\Loader;
 
-use Doctrine\Common\Annotations\Reader;
 use FrankDeJonge\SymfonyI18nRouting\Routing\Annotation\I18nRoute;
 use ReflectionClass;
 use ReflectionMethod;
@@ -64,7 +63,7 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
 
     /**
      * @param RouteCollection  $collection
-     * @param I18nRoute        $annotation
+     * @param SymfonyRoute     $annotation
      * @param array            $globals
      * @param ReflectionClass  $class
      * @param ReflectionMethod $method
