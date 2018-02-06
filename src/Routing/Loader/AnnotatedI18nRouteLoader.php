@@ -45,18 +45,18 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
 
         foreach ($class->getMethods() as $method) {
             $this->defaultRouteIndex = 0;
-            foreach ($this->reader->getMethodAnnotations($method) as $annot) {
-                if ($annot instanceof SymfonyRoute || $annot instanceof I18nRoute) {
-                    $this->addRoute($collection, $annot, $globals, $class, $method);
+            foreach ($this->reader->getMethodAnnotations($method) as $annotation) {
+                if ($annotation instanceof SymfonyRoute) {
+                    $this->addRoute($collection, $annotation, $globals, $class, $method);
                 }
             }
         }
 
-        if (0 === $collection->count() && $class->hasMethod('__invoke') && $annot = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass)) {
+        if (0 === $collection->count() && $class->hasMethod('__invoke') && $annotation = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass)) {
             $globals['path'] = '';
             $globals['name'] = '';
             $globals['locales'] = [];
-            $this->addRoute($collection, $annot, $globals, $class, $class->getMethod('__invoke'));
+            $this->addRoute($collection, $annotation, $globals, $class, $class->getMethod('__invoke'));
         }
 
         return $collection;
@@ -201,7 +201,7 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
 
         $annotation = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass);
 
-        if ($annotation instanceof I18nRoute === false && $annotation instanceof SymfonyRoute === false) {
+        if ($annotation instanceof SymfonyRoute === false) {
             return $globals;
         }
         if ($annotation instanceof I18nRoute) {
