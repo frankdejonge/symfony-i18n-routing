@@ -60,7 +60,6 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
         $hasPrefix = $hasLocalizedPrefix || empty($globals['path']) === false;
         $isLocalized = ! empty($locales);
         $hasPathOrLocales = empty($path) === false || $isLocalized;
-        $defaultLocale = $globals['defaults']['_locale'] ?? null;
 
         if ($hasPrefix === false && $hasPathOrLocales === false) {
             throw MissingRoutePath::forAnnotation("{$class->name}::{$method->name}");
