@@ -4,6 +4,7 @@ namespace FrankDeJonge\SymfonyI18nRouting\Routing\Loader;
 
 use Doctrine\Common\Annotations\Reader;
 use FrankDeJonge\SymfonyI18nRouting\Routing\Annotation\I18nRoute;
+use function get_class;
 use ReflectionClass;
 use ReflectionMethod;
 use Symfony\Component\Config\Resource\FileResource;
@@ -214,9 +215,10 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
             'condition'    => '',
         ];
 
-        $annotation = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass);
+        $annotation = $this->reader->getClassAnnotation($class, I18nRoute::class)
+            ?: $this->reader->getClassAnnotation($class, SymfonyRoute::class);
 
-        if ( ! $annotation instanceof I18nRoute && ! $annotation instanceof SymfonyRoute) {
+        if ($annotation instanceof I18nRoute === false && $annotation instanceof SymfonyRoute === false) {
             return $globals;
         }
         if ($annotation instanceof I18nRoute) {

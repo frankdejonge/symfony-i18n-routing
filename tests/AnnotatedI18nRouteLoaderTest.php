@@ -18,6 +18,7 @@ use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\MissingRouteNameControlle
 use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\NothingButNameController;
 use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\PrefixedActionLocalizedRouteController;
 use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\PrefixedActionPathController;
+use FrankDeJonge\SymfonyI18nRouting\AnnotationFixtures\SymfonyRouteWithPrefixController;
 use FrankDeJonge\SymfonyI18nRouting\Routing\Loader\AnnotatedI18nRouteLoader;
 use FrankDeJonge\SymfonyI18nRouting\Routing\Loader\MissingRouteLocale;
 use FrankDeJonge\SymfonyI18nRouting\Routing\Loader\MissingRouteName;
@@ -213,5 +214,15 @@ class AnnotatedI18nRouteLoaderTest extends TestCase
         $this->assertCount(2, $routes);
         $this->assertEquals('/en/{param}', $routes->get('action.en')->getPath());
         $this->assertEquals('/nl/{param}', $routes->get('action.nl')->getPath());
+    }
+
+    /**
+     * @test
+     */
+    public function loading_symfony_route_with_prefix()
+    {
+        $routes = $this->loader->load(SymfonyRouteWithPrefixController::class);
+        $this->assertCount(1, $routes);
+        $this->assertEquals('/prefix/path', $routes->get('action')->getPath());
     }
 }
