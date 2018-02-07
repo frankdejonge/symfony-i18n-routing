@@ -91,12 +91,12 @@ be mixed at will.
 
 use FrankDeJonge\SymfonyI18nRouting\Routing\Annotation\I18nRoute;
 
-class SomeController
+class ContactController
 {
     /**
-     * @I18nRoute({"nl": "/een/actie", "en": "/an/action"}, name="some_name") 
+     * @I18nRoute({"en": "/send-us-an-email", "nl": "/stuur-ons-een-email"}, name="contact") 
      */
-    public function someAction()
+    public function formAction()
     {
         
     }
@@ -105,12 +105,12 @@ class SomeController
 /** 
  * @Route("/prefix") 
  */
-class PrefixedController
+class PrefixedContactController
 {
     /**
-     * @I18nRoute({"nl": "/een/actie", "en": "/an/action"}, name="some_name") 
+     * @I18nRoute({"en": "/send-us-an-email", "nl": "/stuur-ons-een-email"}, name="prefix_contact") 
      */
-    public function someAction()
+    public function formAction()
     {
         
     }
@@ -124,6 +124,6 @@ Generating routes can be done using the specified route name.
 ```php
 <?php
 /** @var UrlGeneratorInterface $urlGenerator */
-$urlWithCurrentLocale = $urlGenerator->generate('home');
-$urlWithSpecifiedLocale = $urlGenerator->generate('home', ['_locale' => 'nl']);
+$urlWithCurrentLocale = $urlGenerator->generate('contact');
+$urlWithSpecifiedLocale = $urlGenerator->generate('contact', ['_locale' => 'nl']);
 ```
