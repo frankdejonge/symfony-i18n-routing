@@ -1,6 +1,6 @@
 ---
 i_need:
-    resource: ./home.yml
+    resource: ./localized-route.yml
     type: i18n_routes
     host: localhost
     methods: [POST, GET]

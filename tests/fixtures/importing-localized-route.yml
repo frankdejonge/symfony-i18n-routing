@@ -1,5 +1,4 @@
 ---
 i_need:
-    controller: DefaultController::defaultAction
     resource: ./localized-route.yml
     type: i18n_routes

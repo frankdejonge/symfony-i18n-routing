@@ -73,9 +73,10 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
         $name = $annotation->getName();
 
         if (null === $name) {
-            throw MissingRouteName::forAnnotation($class->name . '::' . $method->name);
+            $name = $this->getDefaultRouteName($class, $method);
         }
 
+        $name = $globals['name_prefix'].$name;
         $defaults = array_replace($globals['defaults'], $annotation->getDefaults());
 
         foreach ($method->getParameters() as $param) {
@@ -196,6 +197,7 @@ class AnnotatedI18nRouteLoader extends AnnotationClassLoader
             'methods'      => [],
             'host'         => '',
             'condition'    => '',
+            'name_prefix'  => '',
         ];
 
         $annotation = $this->reader->getClassAnnotation($class, $this->routeAnnotationClass);

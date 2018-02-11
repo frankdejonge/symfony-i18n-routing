@@ -4,4 +4,4 @@ routename:
     locales:
         nl: /nl
         en: /en
-    resource: ./home.yml
+    resource: ./localized-route.yml

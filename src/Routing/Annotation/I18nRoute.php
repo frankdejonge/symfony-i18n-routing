@@ -2,10 +2,8 @@
 
 namespace FrankDeJonge\SymfonyI18nRouting\Routing\Annotation;
 
-use InvalidArgumentException;
-use function is_array;
 use Symfony\Component\Routing\Annotation\Route;
-use function ucfirst;
+use function is_array;
 
 /**
  * I18nRoute annotation.

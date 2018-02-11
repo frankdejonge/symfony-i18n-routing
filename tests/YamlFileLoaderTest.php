@@ -100,7 +100,7 @@ class YamlFileLoaderTest extends TestCase
      */
     public function loading_a_localized_route()
     {
-        $routes = $this->loader->load('home.yml');
+        $routes = $this->loader->load('localized-route.yml');
 
         $this->assertCount(3, $routes);
     }
@@ -110,7 +110,7 @@ class YamlFileLoaderTest extends TestCase
      */
     public function importing_routes_from_a_definition()
     {
-        $routes = $this->loader->load('importer.yml');
+        $routes = $this->loader->load('importing-localized-route.yml');
 
         $this->assertCount(3, $routes);
         $this->assertEquals('/nl', $routes->get('home.nl')->getPath());

@@ -11,7 +11,6 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use function is_array;
-use function trim;
 
 /**
  * YamlFileLoader loads Yaml routing files.
