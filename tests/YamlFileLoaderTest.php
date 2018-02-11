@@ -28,9 +28,6 @@ class YamlFileLoaderTest extends TestCase
         $this->loader = new YamlFileLoader($this->locator);
     }
 
-    /**
-     * @before
-     */
     public function setupStubbedLoader()
     {
         $this->locator = new FileLocatorStub();
