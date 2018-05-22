@@ -38,7 +38,7 @@ Note that if you want to use the annotations you'll need to ensure this bundle i
 ```yaml
 frankdejonge_i18n_routing:
     default_locale: en
-    annotations: false # set to true to enable annotation loading
+    use_annotations: false # set to true to enable annotation loading
 ```
 
 ## Yaml usage
